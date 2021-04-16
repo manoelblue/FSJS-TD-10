@@ -32,7 +32,7 @@ class UserSignIn extends Component {
                 if(errors.length) {
                     this.setState({errors});
                 } else {
-                    context.actions.signIn(username, lastname)
+                    context.actions.signIn(username)
                         .then(() => {
                             this.props.history.push('/');
                         });
