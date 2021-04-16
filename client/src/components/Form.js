@@ -1,4 +1,6 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
+
 import ErrorsDisplay from './ErrorsDisplay';
 
 const Form = (props) => {
@@ -21,13 +23,15 @@ const Form = (props) => {
     }
 
     return (
-        <div>
+        <div className="form--centered">
+            <h2>{submitButtonText}</h2>
             <ErrorsDisplay errors={errors} />
             <form onSubmit={handleSubmit}>
                 {elements()}
                 <button className="button" type="submit">{submitButtonText}</button>
                 <button className="button button-secondary" onClick={handleCancel}>Cancel</button>
             </form>
+            <p>Already have a user account? Click here to <Link to="/signin">sign in</Link>!</p>
         </div>
     );
 }
