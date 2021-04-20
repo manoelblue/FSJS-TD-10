@@ -16,7 +16,10 @@ class UpdateCourse extends Component {
         .then(res => res.json())
         .then(data => this.setState({
             course: data[0]
-        }));
+        }))
+        .catch(error => {
+            <Redirect error={error} to="/error" />
+        })
     }
 
     change = (e) => {
@@ -64,64 +67,68 @@ class UpdateCourse extends Component {
         const {title, description, estimatedTime, materialsNeeded, userId, User} = course;
         const author = User ? `${User.firstName} ${User.lastName}` : "";
 
-        course ? (
-            <Form
-                cancel={this.cancel}
-                submit={this.submit}
-                errors={errors}
-                submitButtonText="Update Course"
-                elements={() => (
-                    <React.Fragment>
-                        <div className="main--flex">
-                            <div>
-                                <label htmlFor="courseTitle">Course Title</label>
-                                <input
-                                    id="courseTitle"
-                                    name="courseTitle"
-                                    type="text"
-                                    value={title}
-                                    onChange={this.change}
-                                    placeholder={title} />
-                                <label htmlFor="courseAuthor">Course Author</label>
-                                <input
-                                    id="courseAuthor"
-                                    name="courseAuthor"
-                                    type="text"
-                                    value={author}
-                                    onChange={this.change}
-                                    placeholder={author} />
-                                <label htmlFor="courseDescription">Course Description</label>
-                                <textarea
-                                    id="courseDescription"
-                                    name="courseDescription"
-                                    value={description}
-                                    onChange={this.change}
-                                    placeholder={description} />
+        if (course && id === userId)  {
+            return (
+                <Form
+                    cancel={this.cancel}
+                    submit={this.submit}
+                    errors={errors}
+                    submitButtonText="Update Course"
+                    elements={() => (
+                        <React.Fragment>
+                            <div className="main--flex">
+                                <div>
+                                    <label htmlFor="courseTitle">Course Title</label>
+                                    <input
+                                        id="courseTitle"
+                                        name="courseTitle"
+                                        type="text"
+                                        value={title}
+                                        onChange={this.change}
+                                        placeholder={title} />
+                                    <label htmlFor="courseAuthor">Course Author</label>
+                                    <input
+                                        id="courseAuthor"
+                                        name="courseAuthor"
+                                        type="text"
+                                        value={author}
+                                        onChange={this.change}
+                                        placeholder={author} />
+                                    <label htmlFor="courseDescription">Course Description</label>
+                                    <textarea
+                                        id="courseDescription"
+                                        name="courseDescription"
+                                        value={description}
+                                        onChange={this.change}
+                                        placeholder={description} />
+                                </div>
+                                <div>
+                                    <label htmlFor="estimatedTime">Estimated Time</label>
+                                    <input
+                                        id="estimatedTime"
+                                        name="estimatedTime"
+                                        type="text"
+                                        value={estimatedTime}
+                                        onChange={this.change}
+                                        placeholder={estimatedTime} />
+                                    <label htmlFor="materialsNeeded">Materials Needed</label>
+                                    <textarea
+                                        id="materialsNeeded"
+                                        name="materialsNeeded"
+                                        type="text"
+                                        value={materialsNeeded}
+                                        onChange={this.change}
+                                        placeholder={materialsNeeded} />
+                                </div>
                             </div>
-                            <div>
-                                <label htmlFor="estimatedTime">Estimated Time</label>
-                                <input
-                                    id="estimatedTime"
-                                    name="estimatedTime"
-                                    type="text"
-                                    value={estimatedTime}
-                                    onChange={this.change}
-                                    placeholder={estimatedTime} />
-                                <label htmlFor="materialsNeeded">Materials Needed</label>
-                                <textarea
-                                    id="materialsNeeded"
-                                    name="materialsNeeded"
-                                    type="text"
-                                    value={materialsNeeded}
-                                    onChange={this.change}
-                                    placeholder={materialsNeeded} />
-                            </div>
-                        </div>
-                    </React.Fragment>
-                )}/>
-        ) : (
+                        </React.Fragment>
+                    )}/>
+            )
+        } else if (course && id !== userId) {
+            <Redirect to="/forbidden" />
+        } else {
             <Redirect to="/notfound" />
-        )
+        }
     }
 };
 

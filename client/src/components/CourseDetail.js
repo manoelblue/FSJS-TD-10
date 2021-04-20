@@ -13,7 +13,10 @@ const CourseDetail = (props) => {
     useEffect(() => {
         fetch(`${config.apiBaseUrl}/courses/${id}`)
         .then(res => res.json())
-        .then(data => setCourse(data[0]));
+        .then(data => setCourse(data[0]))
+        .catch(error => {
+            <Redirect error={error} to="/error" />
+        })
     }, [id]);
 
     const {title, description, estimatedTime, materialsNeeded} = course;

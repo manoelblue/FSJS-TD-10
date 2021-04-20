@@ -10,7 +10,10 @@ const Courses = () => {
     useEffect(() => {
         fetch(`${config.apiBaseUrl}/courses`)
             .then(res => res.json())
-            .then(data => setCourses(data));
+            .then(data => setCourses(data))
+            .catch(error => {
+                <Redirect error={error} to="/error" />
+            })
     }, []);
 
     console.log(courses);
