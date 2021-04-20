@@ -11,6 +11,46 @@ class CreateCourse extends Component {
         errors: []
     }
 
+    change = (e) => {
+        const stateName = e.target.name;
+        const value = e.target.value;
+
+        this.setState(() => {
+            return {
+                [stateName]: value
+            }
+        })
+    };
+
+    submit = () => {
+        const {context} = this.props;
+        const {emailAddress, password} = this.state;
+
+        // Create new user:
+        const username = emailAddress;
+        const user = {username, password};
+
+        context.data.createUser(user)
+            .then(errors => {
+                if(errors.length) {
+                    this.setState({errors});
+                } else {
+                    context.actions.signIn(username)
+                        .then(() => {
+                            this.props.history.push('/');
+                        });
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+                this.props.history.push('/error');
+            })
+    }
+
+    cancel = () => {
+        this.props.history.push('/');
+    }
+
     render() {
         const {courseTitle, courseAuthor, courseDescription, estimatedTime, materialsNeeded, errors} = this.state;
 
@@ -58,7 +98,7 @@ class CreateCourse extends Component {
                                     onChange={this.change}
                                     placeholder="Estimated Time" />
                                 <label htmlFor="materialsNeeded">Materials Needed</label>
-                                <input
+                                <textarea
                                     id="materialsNeeded"
                                     name="materialsNeeded"
                                     type="text"
