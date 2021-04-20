@@ -5,7 +5,7 @@ import config from '../config';
 const CourseDetail = (props) => {
     const [course, setCourse] = useState({});
     const id = props.location.pathname.slice(9);
-    const {context} = this.props;
+    const {context} = props;
     const authUser = context.authenticatedUser;
 
     // Fetch course:
