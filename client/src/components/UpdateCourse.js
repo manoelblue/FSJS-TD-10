@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Redirect} from 'react-router-dom';
 import Form from './Form';
 import config from '../config';
 
@@ -63,7 +64,7 @@ class UpdateCourse extends Component {
         const {title, description, estimatedTime, materialsNeeded, userId, User} = course;
         const author = User ? `${User.firstName} ${User.lastName}` : "";
 
-        return (
+        course ? (
             <Form
                 cancel={this.cancel}
                 submit={this.submit}
@@ -118,6 +119,8 @@ class UpdateCourse extends Component {
                         </div>
                     </React.Fragment>
                 )}/>
+        ) : (
+            <Redirect to="/notfound" />
         )
     }
 };

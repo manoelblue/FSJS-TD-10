@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import ReactMarkdown from 'react-markdown';
-import {Link} from 'react-router-dom';
+import {Link, Redirect} from 'react-router-dom';
 import config from '../config';
 
 const CourseDetail = (props) => {
@@ -18,8 +18,8 @@ const CourseDetail = (props) => {
 
     const {title, description, estimatedTime, materialsNeeded} = course;
 
-    return (
-        <main>
+    course ? (
+        <React.Fragment>
             <div className="actions--bar">
                 <div className="wrap">
                     { authUser && authUser.id === course.userId ?
@@ -56,8 +56,11 @@ const CourseDetail = (props) => {
                     </div>
                 </form>
             </div>
-        </main>
+        </React.Fragment>
+    ) : (
+        <Redirect to="/notfound" />
     )
+
 }
 
 export default CourseDetail;
