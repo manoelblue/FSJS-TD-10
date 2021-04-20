@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import ReactMarkdown from 'react-markdown';
 import {Link} from 'react-router-dom';
 import config from '../config';
 
@@ -16,10 +17,6 @@ const CourseDetail = (props) => {
     }, [id]);
 
     const {title, description, estimatedTime, materialsNeeded} = course;
-    const listOfMaterials =
-        materialsNeeded
-        ? materialsNeeded.split('* ').slice(1).map(material => <li>{material}</li>)
-        : "";
 
     return (
         <main>
@@ -45,7 +42,7 @@ const CourseDetail = (props) => {
                             <h4 className="course--name">{title}</h4>
                             <p>By Joe Smith</p>
 
-                            <p>{description}</p>
+                            <p><ReactMarkdown>{description}</ReactMarkdown></p>
                         </div>
                         <div>
                             <h3 className="course--detail--title">Estimated Time</h3>
@@ -53,7 +50,7 @@ const CourseDetail = (props) => {
 
                             <h3 className="course--detail--title">Materials Needed</h3>
                             <ul className="course--detail--list">
-                                {listOfMaterials}
+                                <ReactMarkdown>{materialsNeeded}</ReactMarkdown>
                             </ul>
                         </div>
                     </div>
