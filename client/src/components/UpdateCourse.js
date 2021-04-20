@@ -6,7 +6,7 @@ class UpdateCourse extends Component {
     state = {
         course: {},
         errors: [],
-        id: this.props.location.pathname.slice(9),
+        id: this.props.location.pathname.slice(9, 1),
     }
 
     // Fetch the Course:
@@ -51,7 +51,6 @@ class UpdateCourse extends Component {
             .catch((error) => {
                 console.log(error);
                 this.props.history.push('/error');
-                // create this route?
             })
     }
 
@@ -60,8 +59,9 @@ class UpdateCourse extends Component {
     }
 
     render() {
-        const {course, errors} = this.state;
-        console.log(course);
+        const {course, errors, id} = this.state;
+        const {title, description, estimatedTime, materialsNeeded, userId, User} = course;
+        const author = User ? `${User.firstName} ${User.lastName}` : "";
 
         return (
             <Form
@@ -78,24 +78,24 @@ class UpdateCourse extends Component {
                                     id="courseTitle"
                                     name="courseTitle"
                                     type="text"
-                                    value={course}
+                                    value={title}
                                     onChange={this.change}
-                                    placeholder="Course Title" />
+                                    placeholder={title} />
                                 <label htmlFor="courseAuthor">Course Author</label>
                                 <input
                                     id="courseAuthor"
                                     name="courseAuthor"
                                     type="text"
-                                    value={course}
+                                    value={author}
                                     onChange={this.change}
-                                    placeholder="Course Author" />
+                                    placeholder={author} />
                                 <label htmlFor="courseDescription">Course Description</label>
                                 <textarea
                                     id="courseDescription"
                                     name="courseDescription"
-                                    value={course}
+                                    value={description}
                                     onChange={this.change}
-                                    placeholder="Course Description" />
+                                    placeholder={description} />
                             </div>
                             <div>
                                 <label htmlFor="estimatedTime">Estimated Time</label>
@@ -103,17 +103,17 @@ class UpdateCourse extends Component {
                                     id="estimatedTime"
                                     name="estimatedTime"
                                     type="text"
-                                    value={course}
+                                    value={estimatedTime}
                                     onChange={this.change}
-                                    placeholder="Estimated Time" />
+                                    placeholder={estimatedTime} />
                                 <label htmlFor="materialsNeeded">Materials Needed</label>
-                                <input
+                                <textarea
                                     id="materialsNeeded"
                                     name="materialsNeeded"
                                     type="text"
-                                    value={course}
+                                    value={materialsNeeded}
                                     onChange={this.change}
-                                    placeholder="Materials Needed" />
+                                    placeholder={materialsNeeded} />
                             </div>
                         </div>
                     </React.Fragment>
