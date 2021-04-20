@@ -1,4 +1,4 @@
-import React, {Component, useState, useEffect} from 'react';
+import React, {Component} from 'react';
 import Form from './Form';
 import config from '../config';
 
@@ -6,16 +6,63 @@ class UpdateCourse extends Component {
     state = {
         course: {},
         errors: [],
+        id: this.props.location.pathname.slice(9),
     }
 
     // Fetch the Course:
     componentDidMount() {
-        fetch(`${config.apiBaseUrl}/courses/${id}`)
+        fetch(`${config.apiBaseUrl}/courses/${this.state.id}`)
         .then(res => res.json())
-        .then(data => setCourse(data[0]));
+        .then(data => this.setState({
+            course: data[0]
+        }));
+    }
+
+    change = (e) => {
+        const stateName = e.target.name;
+        const value = e.target.value;
+
+        this.setState(() => {
+            return {
+                [stateName]: value
+            }
+        })
+    };
+
+    submit = () => {
+        const {context} = this.props;
+        const {emailAddress, password} = this.state;
+
+        // Create new user:
+        const username = emailAddress;
+        const user = {username, password};
+
+        context.data.createUser(user)
+            .then(errors => {
+                if(errors.length) {
+                    this.setState({errors});
+                } else {
+                    context.actions.signIn(username)
+                        .then(() => {
+                            this.props.history.push('/');
+                        });
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+                this.props.history.push('/error');
+                // create this route?
+            })
+    }
+
+    cancel = () => {
+        this.props.history.push('/');
     }
 
     render() {
+        const {course, errors} = this.state;
+        console.log(course);
+
         return (
             <Form
                 cancel={this.cancel}
@@ -31,7 +78,7 @@ class UpdateCourse extends Component {
                                     id="courseTitle"
                                     name="courseTitle"
                                     type="text"
-                                    value={courseTitle}
+                                    value={course}
                                     onChange={this.change}
                                     placeholder="Course Title" />
                                 <label htmlFor="courseAuthor">Course Author</label>
@@ -39,14 +86,14 @@ class UpdateCourse extends Component {
                                     id="courseAuthor"
                                     name="courseAuthor"
                                     type="text"
-                                    value={courseAuthor}
+                                    value={course}
                                     onChange={this.change}
                                     placeholder="Course Author" />
                                 <label htmlFor="courseDescription">Course Description</label>
                                 <textarea
                                     id="courseDescription"
                                     name="courseDescription"
-                                    value={courseDescription}
+                                    value={course}
                                     onChange={this.change}
                                     placeholder="Course Description" />
                             </div>
@@ -56,7 +103,7 @@ class UpdateCourse extends Component {
                                     id="estimatedTime"
                                     name="estimatedTime"
                                     type="text"
-                                    value={estimatedTime}
+                                    value={course}
                                     onChange={this.change}
                                     placeholder="Estimated Time" />
                                 <label htmlFor="materialsNeeded">Materials Needed</label>
@@ -64,7 +111,7 @@ class UpdateCourse extends Component {
                                     id="materialsNeeded"
                                     name="materialsNeeded"
                                     type="text"
-                                    value={materialsNeeded}
+                                    value={course}
                                     onChange={this.change}
                                     placeholder="Materials Needed" />
                             </div>
