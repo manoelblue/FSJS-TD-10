@@ -1,3 +1,36 @@
+/* Colors */
+:root {
+    --verydarkblue: #0F5298;
+    --darkblue: #2565AE;
+    --mediumblue: #3C99DC;
+    --lightblue: #D5F3FE;
+    --verylightblue: #EAFAFD;
+    --white: #fff;
+    --black: #000;
+}
+
+/* Fonts */
+body {
+    font-family: 'Inconsolata', monospace;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Roboto Mono', monospace;
+}
+
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    font-family: 'Inconsolata', monospace;
+}
+::-moz-placeholder { /* Firefox 19+ */
+    font-family: 'Inconsolata', monospace;
+}
+:-ms-input-placeholder { /* IE 10+ */
+    font-family: 'Inconsolata', monospace;
+}
+:-moz-placeholder { /* Firefox 18- */
+    font-family: 'Inconsolata', monospace;
+}
+
 /* global.css */
 * {
     box-sizing: border-box;
@@ -6,7 +39,8 @@ html {
     font-size: 1.25em;
 }
 body {
-    font-family: 'Work Sans', sans-serif;
+    /* font-family: 'Work Sans', sans-serif; */
+    background-color: var(--verylightblue);
 }
 h2 {
     font-size: 1.5rem;
@@ -20,7 +54,7 @@ p {
     hyphens: auto;
 }
 a {
-    color: #939;
+    color: var(--mediumblue);
     text-decoration: none;
 }
 .wrap {
@@ -29,8 +63,8 @@ a {
     padding: 0 1rem;
 }
 header {
-    background: #57496e;
-    color: #fff;
+    background: var(--verydarkblue);
+    color: var(--white);
     padding: 1rem 0;
     margin-bottom: 2rem;
 }
@@ -41,16 +75,16 @@ header {
 }
 .header--logo a {
     font-size: 1.25rem;
-    color: #fff;
+    color: var(--white);
 }
 header li {
     font-size: .8rem;
 }
 header nav a {
-    color: #dbd;
+    color: var(--lightblue);
 }
 header nav a:hover {
-    color: #fff;
+    color: var(--white);
 }
 
 .header--signedin li {
@@ -62,26 +96,26 @@ header nav a:hover {
     margin-left: .5rem;
 }
 .course--module {
-    background: #7c689b;
+    background: var(--darkblue);
     border-radius: .5rem;
     padding: 1.5rem;
     margin-bottom: 1.5rem;
     display: block;
 }
 .course--label {
-    color: #fff;
+    color: var(--white);
     font-size: .9rem;
     font-weight: 400;
     margin-bottom: .25rem;
 }
 .course--title {
-    color: #fff;
+    color: var(--white);
     font-weight: 700;
     font-size: 1.25rem;
 }
 .course--add--module {
     background: #ddd9e4;
-    color: #57496e;
+    color: var(--verydarkblue);
     font-weight: 300;
     font-size: 1.25rem;
 }
@@ -89,7 +123,7 @@ header nav a:hover {
     width: 20px;
     height: auto;
     margin-right: 5px;
-    fill: #57496e;
+    fill: var(--verydarkblue);
 }
 .course--detail--title {
     padding-bottom: .25rem;
@@ -112,18 +146,18 @@ header nav a:hover {
     line-height: 1.5;
 }
 .actions--bar {
-    background: #e9e5f0;
+    background: var(--lightblue);
     padding: 1rem 0;
     margin: -2rem 0 2rem;
 }
 .validation--errors {
-    background: #e9e5f0;
+    background: var(--lightblue);
     padding: 1rem;
     border-radius: .5rem;
     margin-bottom: 2.5rem;
 }
 .validation--errors h3 {
-    color: #800;
+    color: var(--mediumblue);
     font-size: 1.25rem;
     margin-bottom: .5rem;
 }
@@ -167,8 +201,8 @@ textarea {
     min-height: 300px;
 }
 .button {
-    background: #7c689b;
-    color: #fff;
+    background: var(--darkblue);
+    color: var(--white);
     font-size: 1rem;
     padding: .75rem 1.5rem;
     border: 0;
@@ -184,18 +218,18 @@ textarea {
     margin-bottom: 0;
 }
 .button:not(.button-secondary):hover {
-    background: #63537d;
+    background: var(--mediumblue);
     cursor: pointer;
 }
 .button-secondary {
-    color: #7c689b;
-    background: none;
-    box-shadow: 0 0 0 2px #7c689b inset;
+    color: var(--darkblue);
+    background-color: var(--white);
+    box-shadow: 0 0 0 2px var(--darkblue) inset;
     transition: box-shadow 0.2s, color 0.2s;
 }
 .button-secondary:hover {
-    color: #63537d;
-    box-shadow: 0 0 0 2px #63537d inset;
+    color: var(--mediumblue);
+    box-shadow: 0 0 0 2px var(--mediumblue) inset;
     cursor: pointer;
 }
 input:focus, button:focus, .button:focus, textarea:focus {
