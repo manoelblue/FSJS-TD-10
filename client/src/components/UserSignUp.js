@@ -42,9 +42,7 @@ class UserSignUp extends Component {
                 }
             })
             .catch((error) => {
-                console.log(error);
                 this.props.history.push('/error');
-                // create this route?
             })
     }
 
