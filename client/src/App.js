@@ -17,6 +17,7 @@ import UserSignOut from './components/UserSignOut';
 import NotFound from './components/NotFound';
 
 // Components with Context:
+const HeaderWithContext = withContext(Header);
 const CoursesWithContext = withContext(Courses);
 const CreateCourseWithContext =  withContext(CreateCourse);
 const UpdateCourseWithContext =  withContext(UpdateCourse);
@@ -28,7 +29,7 @@ const UserSignOutWithContext =  withContext(UserSignOut);
 const App = () => {
   return (
     <Router>
-        <Header></Header>
+        <HeaderWithContext />
 
         <main>
           <Switch>

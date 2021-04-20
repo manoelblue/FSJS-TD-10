@@ -12,7 +12,7 @@ class UserSignIn extends Component {
         const stateName = e.target.name;
         const value = e.target.value;
 
-        this.useState(() => {
+        this.setState(() => {
             return {
                 [stateName]: value
             }
