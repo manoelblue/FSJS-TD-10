@@ -1,15 +1,21 @@
-import React, {Component} from 'react';
+import React, {Component, useState, useEffect} from 'react';
 import Form from './Form';
+import config from '../config';
 
 class UpdateCourse extends Component {
     state = {
-        course = this.props.courses
-        errors: []
+        course: {},
+        errors: [],
+    }
+
+    // Fetch the Course:
+    componentDidMount() {
+        fetch(`${config.apiBaseUrl}/courses/${id}`)
+        .then(res => res.json())
+        .then(data => setCourse(data[0]));
     }
 
     render() {
-        const {courseTitle, courseAuthor, courseDescription, estimatedTime, materialsNeeded, errors} = this.state;
-
         return (
             <Form
                 cancel={this.cancel}
