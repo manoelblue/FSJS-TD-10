@@ -1,9 +1,12 @@
 import React, {useState, useEffect} from 'react';
+import {Link} from 'react-router-dom';
 import config from '../config';
 
 const CourseDetail = (props) => {
     const [course, setCourse] = useState({});
     const id = props.location.pathname.slice(9);
+    const {context} = this.props;
+    const authUser = context.authenticatedUser;
 
     // Fetch course:
     useEffect(() => {
@@ -22,9 +25,14 @@ const CourseDetail = (props) => {
         <main>
             <div className="actions--bar">
                 <div className="wrap">
-                    <a className="button" href="update-course.html">Update Course</a>
-                    <a className="button" href="/">Delete Course</a>
-                    <a className="button button-secondary" href="index.html">Return to List</a>
+                    { authUser && authUser.id === course.userId ?
+                        <React.Fragment>
+                            <Link className="button" to="/courses/:id/update">Update Course</Link>
+                            <Link className="button" to="/">Delete Course</Link>
+                        </React.Fragment>
+                        : null
+                    }
+                    <Link className="button button-secondary" to="/">Return to List</Link>
                 </div>
             </div>
             
