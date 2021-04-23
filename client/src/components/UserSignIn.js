@@ -31,6 +31,7 @@ class UserSignIn extends Component {
                         return {errors: ['Sign-in was unsuccessful']};
                     })
                 } else {
+                    console.log('Sign-in successfully!');
                     this.props.history.push('/');
                 }
             })
@@ -63,7 +64,7 @@ class UserSignIn extends Component {
                             value={emailAddress} 
                             onChange={this.change} 
                             placeholder="Email" />
-                        <label htmlFor="firstname">Password</label>
+                        <label htmlFor="password">Password</label>
                         <input
                             id="password" 
                             name="password" 
