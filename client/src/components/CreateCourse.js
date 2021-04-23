@@ -3,9 +3,9 @@ import Form from './Form';
 
 class CreateCourse extends Component {
     state = {
-        courseTitle: "",
-        courseAuthor: "",
-        courseDescription: "",
+        title: "",
+        author: "",
+        description: "",
         estimatedTime: "",
         materialsNeeded: "",
         errors: []
@@ -24,24 +24,22 @@ class CreateCourse extends Component {
 
     submit = () => {
         const {context} = this.props;
-        const {emailAddress, password} = this.state;
+        const {title, author, description, estimatedTime, materialsNeeded, errors} = this.state;
 
-        // Create new user:
-        const username = emailAddress;
-        const user = {username, password};
+        // Create new course:
+        const course = {title, author, description, estimatedTime, materialsNeeded, errors};
 
-        context.data.createUser(user)
+        context.data.createCourse(course)
             .then(errors => {
                 if(errors.length) {
                     this.setState({errors});
                 } else {
-                    context.actions.signIn(username)
-                        .then(() => {
-                            this.props.history.push('/');
-                        });
+                    console.log(`${title} was successfully created!`)
+                    this.props.history.push('/');
                 }
             })
             .catch((error) => {
+                console.log(error);
                 this.props.history.push('/error');
             })
     }
@@ -51,7 +49,7 @@ class CreateCourse extends Component {
     }
 
     render() {
-        const {courseTitle, courseAuthor, courseDescription, estimatedTime, materialsNeeded, errors} = this.state;
+        const {title, author, description, estimatedTime, materialsNeeded, errors} = this.state;
 
         return (
             <Form
@@ -63,27 +61,27 @@ class CreateCourse extends Component {
                     <React.Fragment>
                         <div className="main--flex">
                             <div>
-                                <label htmlFor="courseTitle">Course Title</label>
+                                <label htmlFor="title">Course Title</label>
                                 <input
-                                    id="courseTitle"
-                                    name="courseTitle"
+                                    id="title"
+                                    name="title"
                                     type="text"
-                                    value={courseTitle}
+                                    value={title}
                                     onChange={this.change}
                                     placeholder="Course Title" />
-                                <label htmlFor="courseAuthor">Course Author</label>
+                                <label htmlFor="author">Course Author</label>
                                 <input
-                                    id="courseAuthor"
-                                    name="courseAuthor"
+                                    id="author"
+                                    name="author"
                                     type="text"
-                                    value={courseAuthor}
+                                    value={author}
                                     onChange={this.change}
                                     placeholder="Course Author" />
-                                <label htmlFor="courseDescription">Course Description</label>
+                                <label htmlFor="description">Course Description</label>
                                 <textarea
-                                    id="courseDescription"
-                                    name="courseDescription"
-                                    value={courseDescription}
+                                    id="description"
+                                    name="description"
+                                    value={description}
                                     onChange={this.change}
                                     placeholder="Course Description" />
                             </div>
