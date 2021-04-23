@@ -23,23 +23,19 @@ class UserSignIn extends Component {
         const {context} = this.props;
         const {emailAddress, password} = this.state;
 
-        // Create new user:
-        const username = emailAddress;
-        const user = {username, password};
-
-        context.data.createUser(user)
-            .then(errors => {
-                if(errors.length) {
-                    this.setState({errors});
+        context.actions.signIn(emailAddress, password)
+            .then( user => {
+                if(user === null) {
+                    this.setState(() => {
+                        return {errors: ['Sign-in was unsuccessful']};
+                    })
                 } else {
-                    context.actions.signIn(username)
-                        .then(() => {
-                            this.props.history.push('/');
-                        });
+                    this.props.history.push('/');
                 }
             })
-            .catch((error) => {
-                this.props.history.push('/error');
+            .catch( err => {
+                console.log(err);
+                this.props.history.push('/error')
             })
     }
 

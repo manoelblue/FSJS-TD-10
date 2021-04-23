@@ -3,8 +3,8 @@ import Form from './Form';
 
 class UserSignUp extends Component {
     state = {
-        firstname: "",
-        lastname: "",
+        firstName: "",
+        lastName: "",
         emailAddress: "",
         password: "",
         confirmPassword: "",
@@ -15,7 +15,7 @@ class UserSignUp extends Component {
         const stateName = e.target.name;
         const value = e.target.value;
 
-        this.useState(() => {
+        this.setState(() => {
             return {
                 [stateName]: value
             }
@@ -24,18 +24,17 @@ class UserSignUp extends Component {
 
     submit = () => {
         const {context} = this.props;
-        const {emailAddress, password} = this.state;
+        const {firstName, lastName, emailAddress, password, confirmPassword} = this.state;
 
         // Create new user:
-        const username = emailAddress;
-        const user = {username, password};
+        const user = {firstName, lastName, emailAddress, password, confirmPassword};
 
         context.data.createUser(user)
             .then(errors => {
                 if(errors.length) {
                     this.setState({errors});
                 } else {
-                    context.actions.signIn(username)
+                    context.actions.signIn(user)
                         .then(() => {
                             this.props.history.push('/');
                         });
@@ -51,7 +50,7 @@ class UserSignUp extends Component {
     }
 
     render() {
-        const {firstname, lastname, emailAddress, password, confirmPassword, errors} = this.state;
+        const {firstName, lastName, emailAddress, password, confirmPassword, errors} = this.state;
 
         return (
             <Form
@@ -61,20 +60,20 @@ class UserSignUp extends Component {
                 submitButtonText="Sign Up"
                 elements={() => (
                     <React.Fragment>
-                        <label htmlFor="firstname">First Name</label>
+                        <label htmlFor="firstName">First Name</label>
                         <input
-                            id="firstname" 
-                            name="firstname" 
+                            id="firstName" 
+                            name="firstName" 
                             type="text"
-                            value={firstname} 
+                            value={firstName} 
                             onChange={this.change} 
                             placeholder="First Name" />
-                        <label htmlFor="lastname">Last Name</label>
+                        <label htmlFor="lastName">Last Name</label>
                         <input
-                            id="lastname" 
-                            name="lastname" 
+                            id="lastName" 
+                            name="lastName" 
                             type="text"
-                            value={lastname} 
+                            value={lastName} 
                             onChange={this.change} 
                             placeholder="Last Name" />
                         <label htmlFor="emailAddress">Email Address</label>
@@ -85,7 +84,7 @@ class UserSignUp extends Component {
                             value={emailAddress} 
                             onChange={this.change} 
                             placeholder="Email" />
-                        <label htmlFor="firstname">Password</label>
+                        <label htmlFor="password">Password</label>
                         <input
                             id="password" 
                             name="password" 
@@ -93,7 +92,7 @@ class UserSignUp extends Component {
                             value={password} 
                             onChange={this.change} 
                             placeholder="Password" />
-                        <label htmlFor="firstname">Confirm Password</label>
+                        <label htmlFor="confirmPassword">Confirm Password</label>
                         <input
                             id="confirmPassword" 
                             name="confirmPassword"
