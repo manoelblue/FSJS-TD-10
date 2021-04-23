@@ -25,6 +25,7 @@ class UserSignIn extends Component {
 
         context.actions.signIn(emailAddress, password)
             .then( user => {
+                console.log(user);
                 if(user === null) {
                     this.setState(() => {
                         return {errors: ['Sign-in was unsuccessful']};

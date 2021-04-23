@@ -43,6 +43,7 @@ export class Provider extends Component {
             const cookieOptions = {
                 expires: 1 // 1 day
             };
+            console.log(user);
             Cookies.set('authenticatedUser', JSON.stringify(user), {cookieOptions});
         }
         return user;

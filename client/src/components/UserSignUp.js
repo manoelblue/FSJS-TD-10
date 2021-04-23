@@ -34,13 +34,11 @@ class UserSignUp extends Component {
                 if(errors.length) {
                     this.setState({errors});
                 } else {
-                    context.actions.signIn(user)
-                        .then(() => {
-                            this.props.history.push('/');
-                        });
+                    console.log(`${emailAddress} is successfully signed up and authenticated!`)
                 }
             })
             .catch((error) => {
+                console.log(error);
                 this.props.history.push('/error');
             })
     }
