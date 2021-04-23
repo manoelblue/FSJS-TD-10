@@ -35,6 +35,7 @@ class UserSignUp extends Component {
                     this.setState({errors});
                 } else {
                     console.log(`${emailAddress} is successfully signed up and authenticated!`)
+                    this.props.history.push('/');
                 }
             })
             .catch((error) => {
