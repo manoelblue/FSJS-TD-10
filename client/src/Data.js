@@ -18,8 +18,12 @@ export default class Data {
 
         if (requiresAuth) {
             const encodedCredentials = btoa(`${credentials.username}:${credentials.password}`);
+            console.log(encodedCredentials);
             options.headers['Authorization'] = `Basic ${encodedCredentials}`;
         }
+        console.log(url);
+        console.log(options);
+
         return fetch(url, options);
     }
 
@@ -54,7 +58,7 @@ export default class Data {
 
     // Create new course:
     async createCourse(course, username, password) {
-        const response = await this.api('/courses', 'POST', course, true, {username, password});
+        const response = await this.api(`/courses`, 'POST', course, true, {username, password});
         if (response.status === 201) {
             return [];
         }
