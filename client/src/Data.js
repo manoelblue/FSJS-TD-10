@@ -13,6 +13,7 @@ export default class Data {
 
         if (body !== null) {
             options.body = JSON.stringify(body);
+            console.log(body);
         }
 
         if (requiresAuth) {
@@ -25,7 +26,7 @@ export default class Data {
     async getUser(username, password) {
         const response = await this.api(`/users`, 'GET', null, true, { username, password });
         if (response.status === 200) {
-            return response.json().then(data => data);
+            return {username, password};
         }
         else if (response.status === 401) {
             return null;
@@ -52,8 +53,8 @@ export default class Data {
     }
 
     // Create new course:
-    async createCourse(course) {
-        const response = await this.api('/courses', 'POST', course);
+    async createCourse(course, username, password) {
+        const response = await this.api('/courses', 'POST', course, true, {username, password});
         if (response.status === 201) {
             return [];
         }
@@ -63,6 +64,7 @@ export default class Data {
             });
         }
         else {
+            console.log(response);
             throw new Error();
         }
     }

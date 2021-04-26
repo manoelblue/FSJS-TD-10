@@ -32,6 +32,7 @@ class UserSignIn extends Component {
                     })
                 } else {
                     console.log('Sign-in successfully!');
+                    console.log(context);
                     this.props.history.push('/');
                 }
             })

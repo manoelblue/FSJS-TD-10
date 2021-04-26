@@ -24,12 +24,15 @@ class CreateCourse extends Component {
 
     submit = () => {
         const {context} = this.props;
+        const {username, password} = context.authenticatedUser;
         const {title, author, description, estimatedTime, materialsNeeded, errors} = this.state;
+
+        console.log(context.authenticatedUser);
 
         // Create new course:
         const course = {title, author, description, estimatedTime, materialsNeeded, errors};
 
-        context.data.createCourse(course)
+        context.data.createCourse(course, username, password)
             .then(errors => {
                 if(errors.length) {
                     this.setState({errors});

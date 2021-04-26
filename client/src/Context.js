@@ -37,11 +37,10 @@ export class Provider extends Component {
         if (user !== null) {
             this.setState(() => {
                 return {
-                    authenticatedUser: user,
+                    authenticatedUser: {username, password},
                 };
             });
-            console.log(user);
-            Cookies.set('authenticatedUser', JSON.stringify(user), {expires: 1});
+            Cookies.set('authenticatedUser', JSON.stringify({username, password}), {expires: 1});
         }
         return user;
     }

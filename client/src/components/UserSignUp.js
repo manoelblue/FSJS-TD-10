@@ -29,6 +29,8 @@ class UserSignUp extends Component {
         // Create new user:
         const user = {firstName, lastName, emailAddress, password, confirmPassword};
 
+        console.log(context);
+
         context.data.createUser(user)
             .then(errors => {
                 if(errors.length) {
