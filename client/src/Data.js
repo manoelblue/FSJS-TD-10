@@ -30,6 +30,8 @@ export default class Data {
     async getUser(username, password) {
         const response = await this.api(`/users`, 'GET', null, true, { username, password });
         if (response.status === 200) {
+            console.log('User: ', response);
+            console.log('User body: ', response.body);
             return {username, password};
         }
         else if (response.status === 401) {

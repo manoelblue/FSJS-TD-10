@@ -29,15 +29,30 @@ class UserSignUp extends Component {
         // Create new user:
         const user = {firstName, lastName, emailAddress, password, confirmPassword};
 
-        console.log(context);
-
         context.data.createUser(user)
             .then(errors => {
                 if(errors.length) {
                     this.setState({errors});
                 } else {
                     console.log(`${emailAddress} is successfully signed up and authenticated!`)
-                    this.props.history.push('/');
+
+                    context.actions.signIn(emailAddress, password)
+                        .then( user => {
+                            console.log(user);
+                            if(user === null) {
+                                this.setState(() => {
+                                    return {errors: ['Sign-in was unsuccessful']};
+                                })
+                            } else {
+                                console.log('Sign-in successfully!');
+                                console.log(context);
+                                this.props.history.push('/');
+                            }
+                        })
+                        .catch( err => {
+                            console.log(err);
+                            this.props.history.push('/error')
+                        })
                 }
             })
             .catch((error) => {
