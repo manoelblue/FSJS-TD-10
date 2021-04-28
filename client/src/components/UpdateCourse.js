@@ -66,7 +66,7 @@ class UpdateCourse extends Component {
         const {title, description, estimatedTime, materialsNeeded, userId, User} = course;
         const author = User ? `${User.firstName} ${User.lastName}` : "";
 
-        if (course && id === userId)  {
+        if (course && course.userId === userId)  {
             return (
                 <Form
                     cancel={this.cancel}
