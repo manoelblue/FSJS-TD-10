@@ -29,10 +29,16 @@ export default class Data {
 
     async getUser(username, password) {
         const response = await this.api(`/users`, 'GET', null, true, { username, password });
+        const jsonRes = await response.json();
+
         if (response.status === 200) {
             console.log('User: ', response);
-            console.log('User body: ', response.body);
-            return {username, password};
+            console.log('User body: ', jsonRes);
+            return {
+                username,
+                password,
+                userId: jsonRes.userId
+            };
         }
         else if (response.status === 401) {
             return null;

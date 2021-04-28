@@ -24,13 +24,21 @@ class CreateCourse extends Component {
 
     submit = () => {
         const {context} = this.props;
-        const {username, password} = context.authenticatedUser;
-        const {title, author, description, estimatedTime, materialsNeeded, errors} = this.state;
+        const {username, password, userId} = context.authenticatedUser;
+        const {title, description, estimatedTime, materialsNeeded} = this.state;
 
         console.log(context.authenticatedUser);
 
         // Create new course:
-        const course = {title, author, description, estimatedTime, materialsNeeded, errors};
+        const course = {
+            title,
+            description,
+            estimatedTime,
+            materialsNeeded,
+            userId: userId
+        };
+
+        console.log(course);
 
         context.data.createCourse(course, username, password)
             .then(errors => {
