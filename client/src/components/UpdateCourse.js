@@ -7,19 +7,17 @@ class UpdateCourse extends Component {
     state = {
         course: {},
         errors: [],
-        id: this.props.location.pathname.slice(9, 1),
+        id: this.props.location.pathname.slice(9, 10),
     }
 
-    // Fetch the Course:
+    // Fetch course:
     componentDidMount() {
-        fetch(`${config.apiBaseUrl}/courses/${this.state.id}`)
-        .then(res => res.json())
-        .then(data => this.setState({
-            course: data[0]
-        }))
-        .catch(error => {
-            <Redirect error={error} to="/error" />
-        })
+        console.log('mount');
+    };
+
+    componentDidUpdate() {
+        console.log('update');
+        console.log(this.state);
     }
 
     change = (e) => {
@@ -35,26 +33,25 @@ class UpdateCourse extends Component {
 
     submit = () => {
         const {context} = this.props;
-        const {emailAddress, password} = this.state;
+        const {username, password} = context.authenticatedUser;
+        const {course} = this.state;
 
-        // Create new user:
-        const username = emailAddress;
-        const user = {username, password};
-
-        context.data.createUser(user)
-            .then(errors => {
-                if(errors.length) {
-                    this.setState({errors});
-                } else {
-                    context.actions.signIn(username)
-                        .then(() => {
-                            this.props.history.push('/');
-                        });
-                }
-            })
-            .catch((error) => {
-                this.props.history.push('/error');
-            })
+        // context.data.updateCourse(course, username, password)
+        //     .then(errors => {
+        //         if(errors.length) {
+        //             this.setState({
+        //                 course,
+        //                 errors,
+        //             });
+        //         } else {
+        //             console.log('Course was successfully updated!')
+        //             this.props.history.push('/');
+        //         }
+        //     })
+        //     .catch((error) => {
+        //         console.log(error);
+        //         this.props.history.push('/error');
+        //     })
     }
 
     cancel = () => {
@@ -62,11 +59,19 @@ class UpdateCourse extends Component {
     }
 
     render() {
+        const {context} = this.props;
+        const {authenticatedUser} = context;
         const {course, errors, id} = this.state;
         const {title, description, estimatedTime, materialsNeeded, userId, User} = course;
         const author = User ? `${User.firstName} ${User.lastName}` : "";
 
-        if (course && course.userId === userId)  {
+        console.log('Path: ', this.props.location.pathname.slice(9, 10));
+        console.log(`${config.apiBaseUrl}/courses/${this.state.id}`);
+        console.log(course.length > 0);
+        console.log(this.state);
+        console.log(authenticatedUser);
+
+        if (course.length > 0 && course.userId === authenticatedUser.userId)  {
             return (
                 <Form
                     cancel={this.cancel}
@@ -77,26 +82,26 @@ class UpdateCourse extends Component {
                         <React.Fragment>
                             <div className="main--flex">
                                 <div>
-                                    <label htmlFor="courseTitle">Course Title</label>
+                                    <label htmlFor="title">Course Title</label>
                                     <input
-                                        id="courseTitle"
-                                        name="courseTitle"
+                                        id="title"
+                                        name="title"
                                         type="text"
                                         value={title}
                                         onChange={this.change}
                                         placeholder={title} />
-                                    <label htmlFor="courseAuthor">Course Author</label>
+                                    <label htmlFor="author">Course Author</label>
                                     <input
-                                        id="courseAuthor"
-                                        name="courseAuthor"
+                                        id="author"
+                                        name="author"
                                         type="text"
                                         value={author}
                                         onChange={this.change}
                                         placeholder={author} />
-                                    <label htmlFor="courseDescription">Course Description</label>
+                                    <label htmlFor="description">Course Description</label>
                                     <textarea
-                                        id="courseDescription"
-                                        name="courseDescription"
+                                        id="description"
+                                        name="description"
                                         value={description}
                                         onChange={this.change}
                                         placeholder={description} />
@@ -123,10 +128,10 @@ class UpdateCourse extends Component {
                         </React.Fragment>
                     )}/>
             )
-        } else if (course && id !== userId) {
-            <Redirect to="/forbidden" />
+        } else if (course.length > 0 && course.userId !== userId) {
+            return <Redirect to="/forbidden" />
         } else {
-            <Redirect to="/notfound" />
+            return <Redirect to="/notfound" />
         }
     }
 };
