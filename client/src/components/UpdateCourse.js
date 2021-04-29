@@ -93,7 +93,8 @@ class UpdateCourse extends Component {
         const {authenticatedUser} = this.props.context;
         const {title, description, estimatedTime, materialsNeeded, userId, errors} = this.state;
 
-        console.log(this.state);
+        console.log('UserID: ', userId)
+        console.log('Auth UserID: ', authenticatedUser.userId)
 
         if (userId && userId === authenticatedUser.userId)  {
             return (
