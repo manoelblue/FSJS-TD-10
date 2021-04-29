@@ -57,7 +57,7 @@ class CourseDetail extends Component {
                             { authUser && authUser.userId === userId ?
                                 <React.Fragment>
                                     <Link className="button" to={`/courses/${id}/update`}>Update Course</Link>
-                                    <Link className="button" onClick={this.delete} >Delete Course</Link>
+                                    <Link className="button" to="/" onClick={this.delete} >Delete Course</Link>
                                 </React.Fragment>
                                 : null
                             }

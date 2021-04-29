@@ -4,6 +4,8 @@ import Form from './Form';
 import config from '../config';
 
 class UpdateCourse extends Component {
+    _isMounted = false;
+
     state = {
         title: "",
         author: "",
@@ -18,32 +20,41 @@ class UpdateCourse extends Component {
 
     // Fetch course:
     componentDidMount() {
+        this._isMounted = true;
         const {authenticatedUser} = this.props.context;
 
         fetch(`${config.apiBaseUrl}/courses/${this.state.id}`)
-        .then(res => res.json())
-        .then(data => {
-            this.setState({
-                title: data[0].title,
-                author: `${data[0].User.firstName} ${data[0].User.lastName}`,
-                description: data[0].description,
-                estimatedTime: data[0].estimatedTime,
-                materialsNeeded: data[0].materialsNeeded,
-                userId: data[0].userId,
-                User: data[0].User,
-                errors: [],
-            });
-
-            if (data[0] && data[0].userId !== authenticatedUser.userId) {
-                <Redirect to="/forbidden" />
-            } else {
-                <Redirect to="/notfound" />
-            }
-        })
-        .catch(error => {
-            <Redirect error={error} to="/error" />
-        })
+            .then(res => res.json())
+            .then(data => {
+                if(data) {
+                    console.log('data:', data);
+                    if (this._isMounted) {
+                        this.setState({
+                            title: data[0].title,
+                            author: `${data[0].User.firstName} ${data[0].User.lastName}`,
+                            description: data[0].description,
+                            estimatedTime: data[0].estimatedTime,
+                            materialsNeeded: data[0].materialsNeeded,
+                            userId: data[0].userId,
+                            User: data[0].User,
+                        });
+                    }
+                } else {
+                    if (this._isMounted) {
+                        this.setState({
+                            userId: 0,
+                        })
+                    }
+                }
+            })
+            .catch(error => {
+                <Redirect error={error} to="/error" />
+            })
     };
+
+    componentWillUnmount() {
+        this._isMounted = false;
+    }
 
     change = (e) => {
         const stateName = e.target.name;
@@ -92,9 +103,6 @@ class UpdateCourse extends Component {
     render() {
         const {authenticatedUser} = this.props.context;
         const {title, description, estimatedTime, materialsNeeded, userId, errors} = this.state;
-
-        console.log('UserID: ', userId)
-        console.log('Auth UserID: ', authenticatedUser.userId)
 
         if (userId && userId === authenticatedUser.userId)  {
             return (
@@ -145,6 +153,10 @@ class UpdateCourse extends Component {
                         </React.Fragment>
                     )}/>
             )
+        } else if (userId && userId !== 0 && userId !== authenticatedUser.userId) {
+            return <Redirect to="/forbidden"></Redirect>
+        } else if (userId === 0) {
+            return <Redirect to="/notfound"></Redirect>
         } else {
             return (
                 <div className="form--centered">
