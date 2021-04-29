@@ -21,15 +21,33 @@ class CourseDetail extends Component {
             })
     };
 
+    // Delete course method:
+    delete = () => {
+        const {context} = this.props;
+        const {username, password} = context.authenticatedUser;
+        const {id} = this.state;
+
+        context.data.deleteCourse(username, password, id)
+            .then(errors => {
+                if(errors.length) {
+                    console.log(errors);
+                    this.setState({errors});
+                } else {
+                    console.log('Course was successfully deleted!')
+                    this.props.history.push('/');
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+                this.props.history.push('/error');
+            })
+    }
+
     render() {
         const {course, id} = this.state;
         const {context} = this.props;
         const authUser = context.authenticatedUser;
         const {title, description, estimatedTime, materialsNeeded, userId} = course;
-
-        // const delete = () => {
-    
-        // }
 
         console.log('Course: ', course);
         console.log('Auth user: ', authUser);

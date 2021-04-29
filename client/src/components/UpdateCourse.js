@@ -5,36 +5,54 @@ import config from '../config';
 
 class UpdateCourse extends Component {
     state = {
-        course: {},
+        title: "",
+        author: "",
+        description: "",
+        estimatedTime: "",
+        materialsNeeded: "",
         errors: [],
+        userId: null,
+        User: {},
         id: this.props.location.pathname.slice(9, 10),
     }
 
     // Fetch course:
     componentDidMount() {
         console.log('mount');
+        const {authenticatedUser} = this.props.context;
 
         fetch(`${config.apiBaseUrl}/courses/${this.state.id}`)
         .then(res => res.json())
         .then(data => {
             console.log('Data: ', data[0]);
             this.setState({
-                course: data[0]
-            })
+                title: data[0].title,
+                author: `${data[0].User.firstName} ${data[0].User.lastName}`,
+                description: data[0].description,
+                estimatedTime: data[0].estimatedTime,
+                materialsNeeded: data[0].materialsNeeded,
+                userId: data[0].userId,
+                User: data[0].User,
+                errors: [],
+            });
+
+            if (data[0] && data[0].userId !== authenticatedUser.userId) {
+                <Redirect to="/forbidden" />
+            } else {
+                <Redirect to="/notfound" />
+            }
         })
         .catch(error => {
             <Redirect error={error} to="/error" />
         })
     };
 
-    componentDidUpdate() {
-        console.log('update');
-        console.log(this.state);
-    }
-
     change = (e) => {
         const stateName = e.target.name;
         const value = e.target.value;
+
+        console.log('state: ', stateName);
+        console.log('value: ', value);
 
         this.setState(() => {
             return {
@@ -46,24 +64,32 @@ class UpdateCourse extends Component {
     submit = () => {
         const {context} = this.props;
         const {username, password} = context.authenticatedUser;
-        const {course} = this.state;
+        const {title, description, estimatedTime, materialsNeeded, userId, id} = this.state;
+        const course = {
+            userId: userId,
+            id: id,
+            title: title,
+            description: description,
+            estimatedTime: estimatedTime,
+            materialsNeeded: materialsNeeded,
+        }
 
-        // context.data.updateCourse(course, username, password)
-        //     .then(errors => {
-        //         if(errors.length) {
-        //             this.setState({
-        //                 course,
-        //                 errors,
-        //             });
-        //         } else {
-        //             console.log('Course was successfully updated!')
-        //             this.props.history.push('/');
-        //         }
-        //     })
-        //     .catch((error) => {
-        //         console.log(error);
-        //         this.props.history.push('/error');
-        //     })
+        console.log('COURSE: ', course);
+
+        context.data.updateCourse(course, username, password, id)
+            .then(errors => {
+                if(errors.length) {
+                    console.log(errors);
+                    this.setState({errors});
+                } else {
+                    console.log('Course was successfully updated!')
+                    this.props.history.push('/');
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+                this.props.history.push('/error');
+            })
     }
 
     cancel = () => {
@@ -71,20 +97,12 @@ class UpdateCourse extends Component {
     }
 
     render() {
-        const {context} = this.props;
-        const {authenticatedUser} = context;
-        const {course, errors, id} = this.state;
-        const {title, description, estimatedTime, materialsNeeded, userId, User} = course;
-        const author = User ? `${User.firstName} ${User.lastName}` : "";
+        const {authenticatedUser} = this.props.context;
+        const {title, description, estimatedTime, materialsNeeded, userId, errors} = this.state;
 
-        console.log('Path: ', this.props.location.pathname.slice(9, 10));
-        console.log(`${config.apiBaseUrl}/courses/${this.state.id}`);
-        console.log(course.length > 0);
-        console.log('Course: ', course);
         console.log(this.state);
-        console.log(authenticatedUser);
 
-        if (course && course.userId === authenticatedUser.userId)  {
+        if (userId && userId === authenticatedUser.userId)  {
             return (
                 <Form
                     cancel={this.cancel}
@@ -103,14 +121,6 @@ class UpdateCourse extends Component {
                                         value={title}
                                         onChange={this.change}
                                         placeholder={title} />
-                                    <label htmlFor="author">Course Author</label>
-                                    <input
-                                        id="author"
-                                        name="author"
-                                        type="text"
-                                        value={author}
-                                        onChange={this.change}
-                                        placeholder={author} />
                                     <label htmlFor="description">Course Description</label>
                                     <textarea
                                         id="description"
@@ -141,10 +151,12 @@ class UpdateCourse extends Component {
                         </React.Fragment>
                     )}/>
             )
-        } else if (course && course.userId !== userId) {
-            return <Redirect to="/forbidden" />
         } else {
-            return <p>Loading...</p>
+            return (
+                <div className="form--centered">
+                    <h2>Loading...</h2>
+                </div>
+            )
         }
     }
 };

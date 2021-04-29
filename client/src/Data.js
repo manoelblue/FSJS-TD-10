@@ -80,4 +80,32 @@ export default class Data {
             throw new Error();
         }
     }
+
+    // Update  course:
+    async updateCourse(course, username, password, id) {
+        const path = `/courses/${id}`;
+        const response = await this.api(path, 'PUT', course, true, {username, password});
+        if (response.status === 204) {
+            return [];
+        } else if (response.status === 403) {
+            console.log("Not authorized operation.")
+        } else {
+            console.log(response);
+            throw new Error();
+        }
+    }
+
+    // Delete  course:
+    async deleteCourse(username, password, id) {
+        const path = `/courses/${id}`;
+        const response = await this.api(path, 'DELETE', null, true, {username, password});
+        if (response.status === 204) {
+            return [];
+        } else if (response.status === 403) {
+            console.log("Not authorized operation.")
+        } else {
+            console.log(response);
+            throw new Error();
+        }
+    }
 }
