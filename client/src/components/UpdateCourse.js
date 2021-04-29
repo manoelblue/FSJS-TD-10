@@ -13,6 +13,18 @@ class UpdateCourse extends Component {
     // Fetch course:
     componentDidMount() {
         console.log('mount');
+
+        fetch(`${config.apiBaseUrl}/courses/${this.state.id}`)
+        .then(res => res.json())
+        .then(data => {
+            console.log('Data: ', data[0]);
+            this.setState({
+                course: data[0]
+            })
+        })
+        .catch(error => {
+            <Redirect error={error} to="/error" />
+        })
     };
 
     componentDidUpdate() {
@@ -68,10 +80,11 @@ class UpdateCourse extends Component {
         console.log('Path: ', this.props.location.pathname.slice(9, 10));
         console.log(`${config.apiBaseUrl}/courses/${this.state.id}`);
         console.log(course.length > 0);
+        console.log('Course: ', course);
         console.log(this.state);
         console.log(authenticatedUser);
 
-        if (course.length > 0 && course.userId === authenticatedUser.userId)  {
+        if (course && course.userId === authenticatedUser.userId)  {
             return (
                 <Form
                     cancel={this.cancel}
@@ -128,10 +141,10 @@ class UpdateCourse extends Component {
                         </React.Fragment>
                     )}/>
             )
-        } else if (course.length > 0 && course.userId !== userId) {
+        } else if (course && course.userId !== userId) {
             return <Redirect to="/forbidden" />
         } else {
-            return <Redirect to="/notfound" />
+            return <p>Loading...</p>
         }
     }
 };

@@ -41,14 +41,7 @@ class CourseDetail extends Component {
                         <div className="wrap">
                             { authUser && authUser.userId === userId ?
                                 <React.Fragment>
-                                    <Link className="button"
-                                            to={{
-                                                pathname: `/courses/${id}/update`,
-                                                state: {
-                                                    course: course
-                                                }
-                                            }}
-                                    >Update Course</Link>
+                                    <Link className="button" to={`/courses/${id}/update`}>Update Course</Link>
                                     <Link className="button" onClick={this.delete} >Delete Course</Link>
                                 </React.Fragment>
                                 : null
