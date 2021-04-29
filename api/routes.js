@@ -31,7 +31,6 @@ router.get('/users', asyncHandler(async (req, res) => {
 // Post Route to add a new user:
 router.post('/users', asyncHandler(async (req, res) => {
     let user;
-    console.log(req.body);
     try {
         user = await Users.create(req.body);
         res.status(201).end();
@@ -67,7 +66,6 @@ router.get('/courses/:id', asyncHandler(async (req, res) => {
 // Post route to add a course:
 router.post('/courses', asyncHandler(async (req, res) => {
     let course;
-    console.log(req.body);
     try {
         user = await Courses.create(req.body);
         res.status(201).end();

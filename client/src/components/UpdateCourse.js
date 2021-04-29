@@ -18,13 +18,11 @@ class UpdateCourse extends Component {
 
     // Fetch course:
     componentDidMount() {
-        console.log('mount');
         const {authenticatedUser} = this.props.context;
 
         fetch(`${config.apiBaseUrl}/courses/${this.state.id}`)
         .then(res => res.json())
         .then(data => {
-            console.log('Data: ', data[0]);
             this.setState({
                 title: data[0].title,
                 author: `${data[0].User.firstName} ${data[0].User.lastName}`,
@@ -51,9 +49,6 @@ class UpdateCourse extends Component {
         const stateName = e.target.name;
         const value = e.target.value;
 
-        console.log('state: ', stateName);
-        console.log('value: ', value);
-
         this.setState(() => {
             return {
                 [stateName]: value
@@ -73,8 +68,6 @@ class UpdateCourse extends Component {
             estimatedTime: estimatedTime,
             materialsNeeded: materialsNeeded,
         }
-
-        console.log('COURSE: ', course);
 
         context.data.updateCourse(course, username, password, id)
             .then(errors => {

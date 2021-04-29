@@ -52,9 +52,6 @@ router.get('/courses/:id', asyncHandler(async (req, res) => {
 // Post route to add a course:
 router.post('/courses', authenticateUser, asyncHandler(async (req, res) => {
     let course;
-    console.log(req.body);
-    console.log(req.currentUser);
-    console.log({...req.body, ...req.currentUser});
     try {
         course = await Courses.create(req.body);
         res.status(201).location(`/courses/${course.id}`).end();

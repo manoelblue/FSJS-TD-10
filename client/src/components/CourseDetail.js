@@ -49,9 +49,6 @@ class CourseDetail extends Component {
         const authUser = context.authenticatedUser;
         const {title, description, estimatedTime, materialsNeeded, userId} = course;
 
-        console.log('Course: ', course);
-        console.log('Auth user: ', authUser);
-
         if (course) {
             return (
                 <React.Fragment>

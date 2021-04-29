@@ -13,16 +13,12 @@ export default class Data {
 
         if (body !== null) {
             options.body = JSON.stringify(body);
-            console.log(body);
         }
 
         if (requiresAuth) {
             const encodedCredentials = btoa(`${credentials.username}:${credentials.password}`);
-            console.log(encodedCredentials);
             options.headers['Authorization'] = `Basic ${encodedCredentials}`;
         }
-        console.log(url);
-        console.log(options);
 
         return fetch(url, options);
     }
@@ -32,8 +28,6 @@ export default class Data {
         const jsonRes = await response.json();
 
         if (response.status === 200) {
-            console.log('User: ', response);
-            console.log('User body: ', jsonRes);
             return {
                 username,
                 password,

@@ -36,7 +36,6 @@ export class Provider extends Component {
         const user = await this.data.getUser(username, password);
 
         if (user !== null) {
-            console.log('Sing in user: ', user);
             this.setState(() => {
                 return {
                     authenticatedUser: user,

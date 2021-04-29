@@ -27,8 +27,6 @@ class CreateCourse extends Component {
         const {username, password, userId} = context.authenticatedUser;
         const {title, description, estimatedTime, materialsNeeded} = this.state;
 
-        console.log(context.authenticatedUser);
-
         // Create new course:
         const course = {
             title,
@@ -37,8 +35,6 @@ class CreateCourse extends Component {
             materialsNeeded,
             userId: userId
         };
-
-        console.log(course);
 
         context.data.createCourse(course, username, password)
             .then(errors => {
