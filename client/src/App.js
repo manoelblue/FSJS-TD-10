@@ -1,5 +1,6 @@
 import React from 'react';
-import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import {Router, Switch, Route} from 'react-router-dom';
+import history from './history';
 
 // Context
 import withContext from './Context';
@@ -30,7 +31,7 @@ const UserSignOutWithContext =  withContext(UserSignOut);
 
 const App = () => {
   return (
-    <Router>
+    <Router history={history}>
         <HeaderWithContext />
 
         <main>
