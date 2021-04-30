@@ -21,7 +21,6 @@ class UpdateCourse extends Component {
     // Fetch course:
     componentDidMount() {
         this._isMounted = true;
-        const {authenticatedUser} = this.props.context;
 
         fetch(`${config.apiBaseUrl}/courses/${this.state.id}`)
             .then(res => res.json())

@@ -29,6 +29,8 @@ export default class Data {
 
         if (response.status === 200) {
             return {
+                firstName: jsonRes.firstName,
+                lastName: jsonRes.lastName,
                 username,
                 password,
                 userId: jsonRes.userId
