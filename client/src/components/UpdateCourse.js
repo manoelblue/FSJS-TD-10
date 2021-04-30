@@ -80,7 +80,8 @@ class UpdateCourse extends Component {
     }
 
     cancel = () => {
-        this.props.history.push('/');
+        const {id} = this.state;
+        this.props.history.push(`/courses/${id}`);
     }
 
     render() {
