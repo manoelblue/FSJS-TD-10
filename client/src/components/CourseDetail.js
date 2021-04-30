@@ -6,7 +6,7 @@ import config from '../config';
 class CourseDetail extends Component {
     state = {
         course: {},
-        id: this.props.location.pathname.slice(9),
+        id: this.props.match.params.id,
     };
 
     // Fetch course:
