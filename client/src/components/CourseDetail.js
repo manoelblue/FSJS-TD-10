@@ -47,7 +47,8 @@ class CourseDetail extends Component {
         const {course, id} = this.state;
         const {context} = this.props;
         const authUser = context.authenticatedUser;
-        const {title, description, estimatedTime, materialsNeeded, userId} = course;
+        const {title, description, estimatedTime, materialsNeeded, userId, User} = course;
+        const author = User ? `${User.firstName} ${User.lastName}` : '';
 
         if (course) {
             return (
@@ -72,7 +73,7 @@ class CourseDetail extends Component {
                                 <div>
                                     <h3 className="course--detail--title">Course</h3>
                                     <h4 className="course--name">{title}</h4>
-                                    <p>By Joe Smith</p>
+                                    <p>By {author}</p>
     
                                     <ReactMarkdown>{description}</ReactMarkdown>
                                 </div>
