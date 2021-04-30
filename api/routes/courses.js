@@ -82,12 +82,11 @@ router.put('/courses/:id', authenticateUser, asyncHandler(async (req, res) => {
         }
     } catch(error) {
         if(error.name === "SequelizeValidationError") {
-            res.status(400).json({
-                message: "The course could not be updated."
-            }).end()
+            const errors = error.errors.map(error => error.message);
+            res.status(400).json({errors});
         } else {
             throw error;
-        }
+        } 
     }
 }));
 

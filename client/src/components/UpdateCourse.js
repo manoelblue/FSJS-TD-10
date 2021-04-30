@@ -22,7 +22,6 @@ class UpdateCourse extends Component {
             .then(res => res.json())
             .then(data => {
                 if(data.length > 0) {
-                    console.log('data:', data);
                     this.setState({
                         title: data[0].title,
                         author: `${data[0].User.firstName} ${data[0].User.lastName}`,
@@ -37,7 +36,8 @@ class UpdateCourse extends Component {
                 }
             })
             .catch(error => {
-                <Redirect error={error} to="/error" />
+                console.log(error);
+                this.props.history.push('/error');
             })
     };
 
@@ -55,7 +55,7 @@ class UpdateCourse extends Component {
     submit = () => {
         const {context} = this.props;
         const {username, password} = context.authenticatedUser;
-        const {title, description, estimatedTime, materialsNeeded, userId, id} = this.state;
+        const {userId, id, title, description, estimatedTime, materialsNeeded} = this.state;
         const course = {
             userId: userId,
             id: id,
@@ -68,7 +68,6 @@ class UpdateCourse extends Component {
         context.data.updateCourse(course, username, password, id)
             .then(errors => {
                 if(errors.length) {
-                    console.log(errors);
                     this.setState({errors});
                 } else {
                     console.log('Course was successfully updated!')
@@ -77,7 +76,6 @@ class UpdateCourse extends Component {
             })
             .catch((error) => {
                 console.log(error);
-                this.props.history.push('/error');
             })
     }
 
@@ -88,12 +86,6 @@ class UpdateCourse extends Component {
     render() {
         const {authenticatedUser} = this.props.context;
         const {title, description, estimatedTime, materialsNeeded, userId, errors} = this.state;
-
-        console.log('Author: ', userId);
-        console.log('Auth User: ', authenticatedUser.userId);
-
-        console.log('State: ', this.state);
-        console.log('Props match: ', this.props.match);
 
         if (userId && userId === authenticatedUser.userId)  {
             return (

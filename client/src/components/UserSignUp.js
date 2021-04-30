@@ -43,8 +43,6 @@ class UserSignUp extends Component {
                                     return {errors: ['Sign-in was unsuccessful']};
                                 })
                             } else {
-                                console.log('Sign-in successfully!');
-                                console.log(context);
                                 this.props.history.push('/');
                             }
                         })

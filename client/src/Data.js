@@ -85,6 +85,10 @@ export default class Data {
             return [];
         } else if (response.status === 403) {
             console.log("Not authorized operation.")
+        } else if (response.status === 400) {
+            return response.json().then(data => {
+                return data.errors;
+            });
         } else {
             console.log(response);
             throw new Error();

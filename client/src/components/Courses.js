@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Link, Redirect} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 import config from '../config';
 
@@ -16,7 +16,7 @@ class Courses extends Component {
                 courses: data,
             }))
             .catch(error => {
-                <Redirect error={error} to="/error" />
+                this.props.history.push('/error');
             })
     }
 
