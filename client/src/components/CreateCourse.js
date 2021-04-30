@@ -56,6 +56,8 @@ class CreateCourse extends Component {
     }
 
     render() {
+        const authUser = this.props.context.authenticatedUser;
+        const authAuthor = `${authUser.firstName} ${authUser.lastName}`;
         const {title, author, description, estimatedTime, materialsNeeded, errors} = this.state;
 
         return (
@@ -83,7 +85,7 @@ class CreateCourse extends Component {
                                     type="text"
                                     value={author}
                                     onChange={this.change}
-                                    placeholder="Course Author" />
+                                    placeholder={authAuthor} />
                                 <label htmlFor="description">Course Description</label>
                                 <textarea
                                     id="description"
