@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom';
 const Header = (props) => {
     const {context} = props;
     const authUser = context.authenticatedUser;
-    const user = `${authUser.firstName} ${authUser.lastName}`;
+    const user = authUser ? `${authUser.firstName} ${authUser.lastName}` : "";
 
     return (
         <header>
