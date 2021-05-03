@@ -47,10 +47,11 @@ class CourseDetail extends Component {
         const {course, id} = this.state;
         const {context} = this.props;
         const authUser = context.authenticatedUser;
-        const {title, description, estimatedTime, materialsNeeded, userId, User} = course;
-        const author = User ? `${User.firstName} ${User.lastName}` : '';
 
         if (course) {
+            const {title, description, estimatedTime, materialsNeeded, userId, User} = course;
+            const author = User ? `${User.firstName} ${User.lastName}` : '';
+
             return (
                 <React.Fragment>
                     <div className="actions--bar">
